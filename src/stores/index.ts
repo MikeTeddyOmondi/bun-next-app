@@ -100,7 +100,9 @@ export const useTodoStore = create<State & Actions>()((set, get) => ({
 }));
 
 async function fetchData() {
-  const fetchResponse = await fetch("http://localhost:5050/todos");
+  const fetchResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/todos`
+  );
   const jsonData: FetchResponse<Todo[]> = await fetchResponse.json();
   const todos = jsonData.data;
   console.log(todos);
@@ -109,13 +111,16 @@ async function fetchData() {
 }
 
 async function fetchPostData(todo: Todo) {
-  const response = await fetch("http://localhost:5050/todos", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(todo),
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/todos`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(todo),
+    }
+  );
   const jsonData: FetchResponse<Todo> = await response.json();
   const newTodo = jsonData.data;
   console.log(jsonData);
@@ -124,12 +129,15 @@ async function fetchPostData(todo: Todo) {
 }
 
 async function fetchDeleteData(pid: typeof v4) {
-  const response = await fetch(`http://localhost:5050/todos/${pid}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/todos/${pid}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   const jsonData: FetchResponse<ServerResponse> = await response.json();
   const { data } = jsonData;
   console.log(jsonData);
@@ -138,12 +146,15 @@ async function fetchDeleteData(pid: typeof v4) {
 }
 
 async function fetchCompleteData(pid: typeof v4) {
-  const response = await fetch(`http://localhost:5050/todos/${pid}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/todos/${pid}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   const jsonData: FetchResponse<ServerResponse> = await response.json();
   const { data } = jsonData;
   console.log(jsonData);
@@ -152,12 +163,15 @@ async function fetchCompleteData(pid: typeof v4) {
 }
 
 async function fetchClearData() {
-  const fetchResponse = await fetch("http://localhost:5050/todos/clear", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const fetchResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/todos/clear`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   const jsonData: FetchResponse<{ message: string }> =
     await fetchResponse.json();
   const { data } = jsonData;
